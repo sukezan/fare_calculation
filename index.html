@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>東海道・山陽新幹線 運賃計算</title>
+        <meta charset="UTF-8">
+        <style>
+            body {
+                color: gray;
+                font-family: Arial, Helvetica, sans-serif;
+                text-align: center;
+            }
+            #toc {
+                padding: 0.25em 0.5em;/*上下 左右の余白*/
+                color: #494949;/*文字色*/
+                background: transparent;/*背景透明に*/
+                border-left: solid 5px #7db4e6;/*左線*/
+                text-align: left;
+            }
+            #depart {
+                color: rgb(35, 129, 172);
+            }
+            #arrive {
+                color: rgb(35, 129, 172);
+            }
+            select {
+                -moz-appearance: none;
+                -webkit-appearance: none;
+                appearance: none;
+                display: inline-block;
+                width: 50%;
+                margin: 1em 0;
+                color: black; 
+                background-color: #d1e0f0;
+                border: solid 1px #d1e0f0;
+                padding: 0.6em 1.5em 0.6em 0.5em;
+                cursor: pointer; 
+                line-height: 1.4;
+                font-size: 0.95em; 
+                font-weight: 500;
+                border-radius: 4px; 
+                box-shadow: 0 3px 3px -2px rgba(3, 29, 41, 0.15);
+                left: 3px;
+                background-image: linear-gradient(45deg, transparent 50%, rgba(0,0,0,0.4) 50%),  linear-gradient(135deg, rgba(0,0,0,0.4) 50%, transparent 50%);
+                background-size: 5px 5px, 5px 5px;
+                background-position: calc(100% - 15px) 50%, calc(100% - 10px) 50%;
+                background-repeat: no-repeat;
+
+            }
+            #error_d {
+                color: red;
+            }
+            #error_a {
+                color: red;
+            }
+            input[type="checkbox"] {
+                display: none;
+                
+            }
+            input#round-trip[type="checkbox"]+label{
+                position: relative;
+                padding-left: 15px;
+                color: rgb(35, 129, 172);
+                font-size: 20px;
+                font-weight: 500;
+            }
+            input#round-trip[type="checkbox"]+label::before {
+                content: "";
+                display: block;
+                width: 12px;
+                height: 12px;
+                position: absolute;
+                top: 50%;
+                left: 0;
+                transform: translateY(-50%);
+                border: 1px solid black;
+                border-radius: 3px;
+                cursor: pointer;
+            }
+            input#round-trip[type="checkbox"]:checked+label::before {
+                background: rgb(81, 135, 206);
+            }
+            input#round-trip[type=checkbox]:checked+label::after {
+                content: "";
+                display: block;
+                width: 10px;
+                height: 6px;
+                box-sizing: border-box;
+                border-bottom: 2px solid #fff;
+                border-left: 2px solid #fff;
+                position: absolute;
+                top: 40%;
+                left: 5px;
+                -webkit-transform: rotate(-45deg);
+                transform: rotate(-45deg) translateY(-50%);
+            }
+            
+            #result {
+                color: black;
+                width: 30%;
+                margin: 1em 0;
+                border: solid 2px #d1e0f0;
+                border-radius: 100vh;
+                font-size: 20px;
+                font-weight: 500;
+                background-color: #d1e0f0;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 id="toc">乗車券・特急券の合計運賃</h1>
+        <h2 id="depart">乗車駅を選択</h2>
+        <!--input type="search" id="departure" name="station_search" size="15" maxlength="20" placeholder="乗車駅"-->
+        <!-- select departure station -->
+        <select id="departure_station">
+            <option value="selected" class="msg">--乗車駅選択--</option>
+            <optgroup label="--東海道新幹線--">
+                <option value="all:tokyo">東京</option>
+                <option value="all:shinagawa">品川</option>
+                <option value="all:shinyokohama">新横浜</option>
+                <option value="one:odawara">小田原</option>
+                <option value="one:atami">熱海</option>
+                <option value="one:mishima">三島</option>
+                <option value="one:shinfuzi">新富士</option>
+                <option value="one:shizuoka">静岡</option>
+                <option value="one:kakegawa">掛川</option>
+                <option value="one:hamamatu">浜松</option>
+                <option value="one:toyohashi">豊橋</option>
+                <option value="one:mikawaanzyou">三河安城</option>
+                <option value="all:nagoya">名古屋</option>
+                <option value="one:gifuhashima">岐阜羽島</option>
+                <option value="one:maibara">米原</option>
+                <option value="all:kyoto">京都</option>
+                <option value="all:shinosaka">新大阪</option>
+                
+            </optgroup>
+            <optgroup label="--山陽新幹線--">
+                <option value="all:shinkobe">新神戸</option>
+                <option value="all:nishiakashi">西明石</option>
+                <option value="all:himezi">姫路</option>
+                <option value="one:aioi">相生</option>
+                <option value="all:okayama">岡山</option>
+                <option value="one:shinkurashiki">新倉敷</option>
+                <option value="all:fukuyama">福山</option>
+                <option value="one:shinonomiti">新尾道</option>
+                <option value="one:mihara">三原</option>
+                <option value="one:higashihiroshima">東広島</option>
+                <option value="all:hiroshima">広島</option>
+                <option value="one:shiniwakuni">新岩国</option>
+                <option value="alls:tokuyama">徳山</option>
+                <option value="all:shinyamaguchi">新山口</option>
+                <option value="one:asa">厚狭</option>
+                <option value="two:shinshimonoseki">新下関</option>
+                <option value="all:kokura">小倉</option>
+                <option value="all:hakata">博多</option>
+            </optgroup>
+            
+        </select>
+        <div id="error_d"></div>
+
+        <!--input type="search" id="arrival" name="station_search" size="15" maxlength="20" placeholder="到着駅"--><br>
+        <!-- select departure station -->
+        <h2 id="arrive">到着駅を選択</h2>
+        <select id="arrival_station">
+            <option value="selected" class="msg">--到着駅選択--</option>
+            <optgroup label="--東海道新幹線--">
+                <option value="all:tokyo">東京</option>
+                <option value="all:shinagawa">品川</option>
+                <option value="all:shinyokohama">新横浜</option>
+                <option value="one:odawara">小田原</option>
+                <option value="one:atami">熱海</option>
+                <option value="one:mishima">三島</option>
+                <option value="one:shinfuzi">新富士</option>
+                <option value="one:shizuoka">静岡</option>
+                <option value="one:kakegawa">掛川</option>
+                <option value="one:hamamatu">浜松</option>
+                <option value="one:toyohashi">豊橋</option>
+                <option value="one:mikawaanzyou">三河安城</option>
+                <option value="all:nagoya">名古屋</option>
+                <option value="one:gifuhashima">岐阜羽島</option>
+                <option value="one:maibara">米原</option>
+                <option value="all:kyoto">京都</option>
+                <option value="all:shinosaka">新大阪</option>
+                
+            </optgroup>
+            <optgroup label="--山陽新幹線--">
+                <option value="all:shinkobe">新神戸</option>
+                <option value="all:nishiakashi">西明石</option>
+                <option value="all:himezi">姫路</option>
+                <option value="one:aioi">相生</option>
+                <option value="all:okayama">岡山</option>
+                <option value="one:shinkurashiki">新倉敷</option>
+                <option value="all:fukuyama">福山</option>
+                <option value="one:shinonomichi">新尾道</option>
+                <option value="one:mihara">三原</option>
+                <option value="one:higashihiroshima">東広島</option>
+                <option value="all:hiroshima">広島</option>
+                <option value="one:shiniwakuni">新岩国</option>
+                <option value="all:tokuyama">徳山</option>
+                <option value="all:shinyamaguchi">新山口</option>
+                <option value="one:asa">厚狭</option>
+                <option value="two:shinshimonoseki">新下関</option>
+                <option value="all:kokura">小倉</option>
+                <option value="all:hakata">博多</option>
+            </optgroup>
+            
+        </select>
+        <div id="error_a"></div>
+        <br>
+        
+        <div>
+            <input type="checkbox" id="round-trip" name="round-trip">
+            <label for="round-trip">往復運賃</label>
+            
+            <!--
+            <input type="checkbox" id="students-discount" name="students-discount">
+            <label for="students-discount">学生割引適用</label> -->
+        </div>
+
+        <p>
+            <button type="button" id="result" onclick="ButtonClick()">運賃検索</button>
+        </p>
+
+        
+        <script src="./script.js"></script>
+    </body>
+</html>

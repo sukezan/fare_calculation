@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>検索結果</title>
+        <meta charset="UTF-8">
+        <style>
+            body {
+                color: gray;
+                font-family: Arial, Helvetica, sans-serif;
+                text-align: center;
+            }
+            #trip_route {
+                color: black;
+            }
+            #non_reserve {
+                color: rgb(35, 129, 172);
+            }
+            #reserve {
+                color: rgb(48, 156, 206);
+            }
+            #nozomi_reserve {
+                color: rgb(52, 165, 218);
+            }
+            #transfer {
+                color: rgb(145, 35, 172);
+            }
+            #green {
+                color: rgb(35, 172, 108);
+            }
+            #green_nozomi {
+                color: rgb(35, 172, 108);
+            }
+            #transfer_detail {
+                color: red ;
+            }
+            #return {
+                color: black;
+                width: 30%;
+                margin: 1em 0;
+                border: solid 2px #d1e0f0;
+                border-radius: 100vh;
+                font-size: 20px;
+                font-weight: 500;
+                background-color: #d1e0f0;
+            }
+            
+        </style>
+        
+    </head>
+    <body>
+
+        <h1><div id="trip_route"></div></h1><br>
+
+        <h2><div id="non_reserve"></div></h2>
+        <h2><div id="reserve"></div></h2>
+        <h2><div id="nozomi_reserve"></div></h2>
+        <h2><div id="transfer"></div></h2>
+        <div id="transfer_detail"></div><br>
+        <h2><div id="green"></div></h2>
+        <h2><div id="green_nozomi"></div></h2>
+        <h2><div id="students"></div></h2>
+        <h2><div id="round"></div></h2><br>
+
+        <p>
+            <button type="button" id="return" onclick="Return()">トップに戻る</button>
+        </p>
+        
+
+        <script src="./data.js"></script>
+        <script src="./script_output.js"></script>
+    </body>
+</html>
+
+        

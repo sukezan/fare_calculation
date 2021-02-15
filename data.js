@@ -1,8 +1,8 @@
 function table(FROM, TO, type) {
 
     var dict = {tokyo:{
-                        shinagawa:{normal:170,reserve:870,exp_reserve:2500,exp_free:870,transfer:210},
-                        shinyokohama:{normal:510,reserve:870,exp_reserve:2500,exp_free:870,transfer:210},
+                        shinagawa:{normal:170,reserve:2290,exp_reserve:2500,exp_free:870,transfer:210},
+                        shinyokohama:{normal:510,reserve:2290,exp_reserve:2500,exp_free:870,transfer:210},
                         odawara:{normal:1520,reserve:2290},
                         atami:{normal:1980,reserve:2290},
                         mishima:{normal:2310,reserve:2290},

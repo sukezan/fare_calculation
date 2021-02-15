@@ -1,4 +1,4 @@
-function getParam(name, url) {
+function getQuery(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
@@ -9,9 +9,9 @@ function getParam(name, url) {
 }
 
 function getObj() {
-    var stop_d = getParam('key_d');
-    var stop_a = getParam('key_a'); //query: get detail of station
-    var checked = getParam('checked'); // checked or not
+    var stop_d = getQuery('key_d');
+    var stop_a = getQuery('key_a'); //query: get detail of station
+    var checked = getQuery('checked'); // checked or not
 
     var list_d = setData(stop_d);
     var list_a = setData(stop_a); //type: all, two, one
@@ -38,7 +38,7 @@ function getObj() {
     var array= [type_d, type_a, key_d, key_a, d_station, a_station, name_d, name_a, checked, from_kilo, green]; 
     //ex: [all, all, 0, 16, 'tokyo', 'shinosaka', '東京', '新大阪', 'true', 120.3]
 
-    return array
+    return array;
 }
 
 function setData(key) {
@@ -46,7 +46,7 @@ function setData(key) {
 
     var without_stop = key.replace(STOP+':', '');
 
-    return [STOP, without_stop]
+    return [STOP, without_stop];
 }
 
 function output_direct(array) {
@@ -63,7 +63,7 @@ function output_direct(array) {
     var reserve_all = normal_fee + reserve_fee;
     var nozomi_all = normal_fee + exp_reserve;
     var free_all = normal_fee + exp_free;
-    var students_fare = normal_fee * 0.8 //2割引
+    var students_fare = normal_fee * 0.8; //2割引
     var decimal = students_fare/10;
     var Belowed = Math.floor(decimal);
     var students_fare = (Belowed * 10) + exp_reserve;
@@ -77,17 +77,20 @@ function output_direct(array) {
     var nozomi_reserve = 'のぞみ指定席料金: ' + nozomi_all + '円';
     var green_reserve = 'ひかり・こだまグリーン料金: ' + add_green + '円';
     var green_nozomi = 'のぞみグリーン料金: ' + green_exp + '円';
-    
-
-    console.log(judged)
 
     if (judged == 'true' && distance >= 601) {
         var disc_fare = (normal_fee * 0.9) + exp_reserve;
+        var for_round = ((normal_fee * 0.9) / 10);
+        var belowed = Math.floor(for_round);
+        var round_fare_students = ((belowed + 10) + exp_reserve) * 2;
         var round_fare = '往復割引料金: ' + disc_fare * 2 + '円';
+        var round_students = '往復学生割引料金: ' + round_fare_students + '円'; 
     } else if (judged == 'true' && distance <= 601) {
-        var round_fare = '往復運賃は片道601km以上で適応されます'
+        var round_fare = '往復運賃は片道601km以上で適応されます';
+        var round_students = '';
     } else if (judged == 'false') {
-        var round_fare = ''
+        var round_fare = '';
+        var round_students = '';
     }
 
     if (distance >= 101) {
@@ -104,6 +107,7 @@ function output_direct(array) {
     document.getElementById('green_nozomi').innerHTML = green_nozomi;
     document.getElementById('students').innerHTML = students;
     document.getElementById('round').innerHTML = round_fare;
+    document.getElementById('round_students').innerHTML = round_students;
 
 }
 
@@ -116,12 +120,10 @@ function output_exp(array) {
     distance = array[9];
     green = array[10];
 
-    console.log('true')
-
     var transfer_info = transfer(array);
     var normal = normal_fee + reserve_fee;
     var include_transfer = normal + transfer_info[2];
-    var students_fare = normal_fee * 0.8 //2割引
+    var students_fare = normal_fee * 0.8; //2割引
     var decimal = students_fare/10;
     var Belowed = Math.floor(decimal);
     var students_fare = (Belowed * 10) + reserve_fee;
@@ -133,23 +135,29 @@ function output_exp(array) {
     let reserve = '普通車指定席料金: ' + normal + '円';
     let transfer_fare = 'のぞみ乗り換え料金: ' + include_transfer + '円';
     let transfer_detail = ' ※' + transfer_info[0] + ' - ' + transfer_info[1] + '間でのぞみ利用の場合';
-    let green_reserve = 'グリーン料金: ' + add_green + '円 (ひかり・こだま利用)';
+    let green_reserve = 'グリーン料金(ひかり・こだま利用): ' + add_green + '円';
 
     if (judged == 'true' && distance >= 601) {
         var disc_fare = (normal_fee * 0.9) + exp_reserve;
+        var for_round = ((normal_fee * 0.9) / 10);
+        var belowed = Math.floor(for_round);
+        var round_fare_students = ((belowed + 10) + exp_reserve) * 2;
+        var round_fare = '往復割引料金: ' + disc_fare * 2 + '円';
+        var round_students = '往復学生割引料金: ' + round_fare_students + '円'; 
         var round_fare = '往復割引運賃: ' + disc_fare * 2 + '円';
     } else if (judged == 'true' && distance <= 601) {
-        var round_fare = '往復運賃は片道601km以上で適応されます'
+        var round_fare = '往復運賃は片道601km以上で適応されます';
+        var round_students = '';
     } else if (judged == 'false') {
-        var round_fare = ''
+        var round_fare = '';
+        var round_students = '';
     }
 
     if (distance >= 101) {
         var students = '学生割引運賃: ' + students_fare + '円';
     } else {
-        var students = ''
+        var students = '';
     }
-
     document.getElementById('trip_route').innerHTML = trip_route;
     document.getElementById('non_reserve').innerHTML = non_reserve;
     document.getElementById('reserve').innerHTML = reserve;
@@ -158,6 +166,7 @@ function output_exp(array) {
     document.getElementById('green').innerHTML = green_reserve;
     document.getElementById('students').innerHTML = students;
     document.getElementById('round').innerHTML = round_fare;
+    document.getElementById('round_students').innerHTML = round_students;
 }
 
 function output_normal(array) {
@@ -170,7 +179,7 @@ function output_normal(array) {
     green = array[10];
 
     var normal = normal_fee + reserve_fee;
-    var students_fare = normal_fee * 0.8 //2割引
+    var students_fare = normal_fee * 0.8; //2割引
     var decimal = students_fare/10;
     var Belowed = Math.floor(decimal);
     var students_fare = (Belowed * 10) + reserve_fee;
@@ -184,27 +193,33 @@ function output_normal(array) {
 
     if (judged == 'true' && distance >= 601) {
         var disc_fare = (normal_fee * 0.9) + reserve_fee;
+        var for_round = ((normal_fee * 0.9) / 10);
+        var belowed = Math.floor(for_round);
+        var round_fare_students = ((belowed + 10) + exp_reserve) * 2;
+        var round_fare = '往復割引料金: ' + disc_fare * 2 + '円';
+        var round_students = '往復学生割引料金: ' + round_fare_students + '円';
         var round_fare = '往復割引料金: ' + disc_fare * 2 + '円';
     } else if (judged == 'true' && distance <= 601) {
-        var round_fare = '往復運賃は片道601km以上で適応されます'
+        var round_fare = '往復運賃は片道601km以上で適応されます';
     } else if (judged == 'false') {
-        var round_fare = ''
+        var round_fare = '';
+        var round_students = '';
     }
 
     if (distance >= 101) {
         var students = '学生割引運賃(普通車指定席): ' + students_fare + '円';
     } else {
-        var students = ''
+        var students = '';
+        var round_students = '';
     }
 
     document.getElementById('trip_route').innerHTML = trip_route;
     document.getElementById('non_reserve').innerHTML = non_reserve;
     document.getElementById('reserve').innerHTML = reserve;
-    //document.getElementById('transfer').innerHTML = ''
-    //document.getElementById('transfer_detail').innerHTML = ''
     document.getElementById('green').innerHTML = green_reserve;
     document.getElementById('students').innerHTML = students;
     document.getElementById('round').innerHTML = round_fare;    
+    document.getElementById('round_students').innerHTML = round_students;
 }
 
 function Sort(array) {
@@ -224,6 +239,13 @@ function Sort(array) {
 
 }
 
+function translate(name) {
+    key = Object.keys(station_list(name));
+    station_name = station_list(name)[key];
+
+    return station_name;
+}
+
 function transfer(array) {
     var key_d = array[2];
     var key_a = array[3];
@@ -232,11 +254,10 @@ function transfer(array) {
     var a_station = array[5];
 
     var stops = nozomi_stops(); //get data of nozomi stops from another file
-
+    
     var stop_detail = array[11];
-    idx = stop_detail.indexOf(-1);
+    var idx = stop_detail.indexOf(-1);
 
-    var idx = stop_detail[0];
     var local = array[idx+2];
     
     stops[key_d] = d_station;
@@ -263,33 +284,39 @@ function transfer(array) {
 
     switch (idx) {
         case 0:
-            index += 1;
-            transfer_stop = sorted_list[index][1];
-            console.log(transfer_stop)
-            transfer_fee = table(transfer_stop, to_west, 'transfer'); //get fare information
+            if (key_d < key_a) {
+                index += 1;
+                transfer_stop = sorted_list[index][1];
+                transfer_fee = table(transfer_stop, a_station, 'transfer');//get fare information
 
-            key_first = Object.keys(station_list(transfer_stop));
-            name_first = station_list(transfer_stop)[key_first]; //get name of departure station
+            } else {
+                index -= 1;
+                transfer_stop = sorted_list[index][1];
+                transfer_fee = table(a_station, transfer_stop, 'transfer');
 
-            key_last = Object.keys(station_list(to_west));
-            name_last = station_list(to_west)[key_last];
+            }
+            name_first = translate(transfer_stop);
+            name_last = translate(a_station);
             break;
         case 1:
-            index -= 1;
-            transfer_stop = sorted_list[index][1];
-            transfer_fee = table(to_east, transfer_stop, 'transfer');
+            if (key_d < key_a) {
+                index -= 1;
+                transfer_stop = sorted_list[index][1];
+                transfer_fee = table(d_station,transfer_stop, 'transfer');
 
-            key_first = Object.keys(station_list(to_east));
-            name_first = station_list(to_east)[key_first];
-
-            key_last = Object.keys(station_list(transfer_stop));
-            name_last = station_list(transfer_stop)[key_last];
+            } else {
+                index += 1;
+                transfer_stop = sorted_list[index][1];
+                transfer_fee = table(transfer_stop, d_station, 'transfer');
+            }
+            name_first = translate(d_station);
+            name_last = translate(transfer_stop);
         default:
             break;
     }
     transfer_info = [name_first, name_last, transfer_fee];
 
-    return transfer_info
+    return transfer_info;
 }
 
 function judge(type) {
@@ -303,7 +330,7 @@ function judge(type) {
 }
 
 function switch_func(array) {
-    Sort(array)
+    Sort(array);
 
     var count = 0;
     var Bools = [];
@@ -313,13 +340,11 @@ function switch_func(array) {
         count += judged;
     }
 
-    console.log(count)
     switch (count) {
         case 2:
             output_direct(array);
             break;
         case 0:
-            console.log('case0')
             array.push(Bools);
             output_exp(array);
         case -2:
@@ -333,10 +358,9 @@ function Return() {
     location.href = "./index.html"
 }
 
-
 function main(){
     array = getObj();
-    switch_func(array)
+    switch_func(array);
 }
 
 main()

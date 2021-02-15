@@ -703,7 +703,7 @@ function station_list(STATION) {
         tokuyama:{29:'徳山'},
         shinyamaguchi:{30:'新山口'},
         asa:{31:'厚狭'},
-        shinkurashiki:{32:'新倉敷'},
+        shinshimonoseki:{32:'新下関'},
         kokura:{33:'小倉'},
         hakata:{34:'博多'}
     }

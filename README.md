@@ -57,6 +57,6 @@
 2021年2月現在
 
 # License
-sukezan/Spamming is licensed under the MIT License
+sukezan/fare_calculation is licensed under the MIT License
 
-Copyright (c) 2020 Kosuke Yamagami
+Copyright (c) 2021 Kosuke Yamagami

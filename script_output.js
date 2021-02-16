@@ -94,7 +94,7 @@ function output_direct(array) {
     }
 
     if (distance >= 101) {
-        var students = '学生割引運賃(のぞみ普通車指定席): ' + students_fare + '円';
+        var students = '学生割引料金(のぞみ普通車指定席): ' + students_fare + '円';
     } else {
         var students = ''
     }
@@ -144,7 +144,7 @@ function output_exp(array) {
         var round_fare_students = ((belowed + 10) + exp_reserve) * 2;
         var round_fare = '往復割引料金: ' + disc_fare * 2 + '円';
         var round_students = '往復学生割引料金: ' + round_fare_students + '円'; 
-        var round_fare = '往復割引運賃: ' + disc_fare * 2 + '円';
+        var round_fare = '往復割引料金: ' + disc_fare * 2 + '円';
     } else if (judged == 'true' && distance <= 601) {
         var round_fare = '往復運賃は片道601km以上で適応されます';
         var round_students = '';
@@ -154,7 +154,7 @@ function output_exp(array) {
     }
 
     if (distance >= 101) {
-        var students = '学生割引運賃: ' + students_fare + '円';
+        var students = '学生割引料金: ' + students_fare + '円';
     } else {
         var students = '';
     }
@@ -207,7 +207,7 @@ function output_normal(array) {
     }
 
     if (distance >= 101) {
-        var students = '学生割引運賃(普通車指定席): ' + students_fare + '円';
+        var students = '学生割引料金(普通車指定席): ' + students_fare + '円';
     } else {
         var students = '';
         var round_students = '';

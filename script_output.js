@@ -133,9 +133,15 @@ function output_exp(array) {
     let trip_route = d_station +' ~ '+ a_station +'間の料金詳細';
     let non_reserve = '普通車自由席料金: ' + normal - 530 + '円';
     let reserve = '普通車指定席料金: ' + normal + '円';
-    let transfer_fare = 'のぞみ乗り換え料金: ' + include_transfer + '円';
-    let transfer_detail = ' ※' + transfer_info[0] + ' - ' + transfer_info[1] + '間でのぞみ利用の場合';
     let green_reserve = 'グリーン料金(ひかり・こだま利用): ' + add_green + '円';
+
+    if (transfer_info[2] == 0) {
+        var transfer_fare = ''
+        var transfer_detail = ''
+    } else {
+        var transfer_fare = 'のぞみ乗り換え料金: ' + include_transfer + '円';
+        var transfer_detail = ' ※' + transfer_info[0] + ' - ' + transfer_info[1] + '間でのぞみ利用の場合';
+    }
 
     if (judged == 'true' && distance >= 601) {
         var disc_fare = (normal_fee * 0.9) + exp_reserve;
@@ -259,6 +265,10 @@ function transfer(array) {
     var idx = stop_detail.indexOf(-1);
 
     var local = array[idx+2];
+
+    var idx = stop_detail.indexOf(1);
+
+    var nozomi = array[idx+2];
     
     stops[key_d] = d_station;
     stops[key_a] = a_station;
@@ -279,17 +289,28 @@ function transfer(array) {
     for (var i = 0; i < sorted_list.length; i++) {
         if (local == sorted_list[i][0]) {
             index = i;
-        }
+            if (nozomi == sorted_list[index-1][0]) {
+                idx = 2;
+            } else if (nozomi == sorted_list[index+1][0]) {
+                idx = 2;
+            } else {
+                break;
+            }
+        } 
     }
+
+    var name_first = ''
+    var name_last = ''
+    var transfer_fee = 0
 
     switch (idx) {
         case 0:
             if (key_d < key_a) {
-                index += 1;
+                index += 1; 
                 transfer_stop = sorted_list[index][1];
                 transfer_fee = table(transfer_stop, a_station, 'transfer');//get fare information
 
-            } else {
+            } else if (key_d > key_a) {
                 index -= 1;
                 transfer_stop = sorted_list[index][1];
                 transfer_fee = table(a_station, transfer_stop, 'transfer');

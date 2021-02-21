@@ -621,7 +621,7 @@ function table(FROM, TO, type) {
                         hakata:{normal:5500,reserve:4700}},
 
                 hiroshima:{
-                        hiniwakuni:{normal:770,reserve:870},
+                        shiniwakuni:{normal:770,reserve:870},
                         tokuyama:{normal:1690,reserve:2290,exp_reserve:2500,exp_free:1760,transfer:210},
                         shinyamaguchi:{normal:2310,reserve:3060,exp_reserve:3270,exp_free:2530,transfer:210},
                         asa:{normal:3080,reserve:3060},

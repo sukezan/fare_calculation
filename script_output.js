@@ -136,8 +136,8 @@ function output_exp(array) {
     let green_reserve = 'グリーン料金(ひかり・こだま利用): ' + add_green + '円';
 
     if (transfer_info[2] == 0) {
-        var transfer_fare = ''
-        var transfer_detail = ''
+        var transfer_fare = '';
+        var transfer_detail = '';
     } else {
         var transfer_fare = 'のぞみ乗り換え料金: ' + include_transfer + '円';
         var transfer_detail = ' ※' + transfer_info[0] + ' - ' + transfer_info[1] + '間でのぞみ利用の場合';
@@ -266,9 +266,9 @@ function transfer(array) {
 
     var local = array[idx+2];
 
-    var idx = stop_detail.indexOf(1);
+    var indx = stop_detail.indexOf(1);
 
-    var nozomi = array[idx+2];
+    var nozomi = array[indx+2];
     
     stops[key_d] = d_station;
     stops[key_a] = a_station;
@@ -283,7 +283,7 @@ function transfer(array) {
         sorted[ key[i] ] = stops[ key[i] ];
     }
 
-    sorted_list = Object.entries(sorted) //change to the list from dictionary
+    sorted_list = Object.entries(sorted); //change to the list from dictionary
     var index = 0;
 
     for (var i = 0; i < sorted_list.length; i++) {
@@ -299,9 +299,9 @@ function transfer(array) {
         } 
     }
 
-    var name_first = ''
-    var name_last = ''
-    var transfer_fee = 0
+    var name_first = '';
+    var name_last = '';
+    var transfer_fee = 0;
 
     switch (idx) {
         case 0:
@@ -343,10 +343,10 @@ function transfer(array) {
 function judge(type) {
     switch (type) {
         case 'all':
-            return 1
+            return 1;
     
         default:
-            return -1
+            return -1;
     }
 }
 
@@ -376,7 +376,7 @@ function switch_func(array) {
 }
 
 function Return() {
-    location.href = "./index.html"
+    location.href = "./index.html";
 }
 
 function main(){

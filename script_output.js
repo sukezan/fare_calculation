@@ -71,7 +71,7 @@ function output_direct(array) {
     var add_green = normal_fee + (reserve_fee - 530) + green;
     var green_exp = normal_fee + (exp_reserve- 530) + green;
 
-    var trip_route = d_station +' ~ '+ a_station +'間の料金詳細';
+    var trip_route = d_station +' ~ '+ a_station +'間の料金一覧';
     var non_reserve = '普通車自由席料金: ' + free_all + '円';
     var reserve = 'ひかり・こだま指定席料金: ' + reserve_all + '円';
     var nozomi_reserve = 'のぞみ指定席料金: ' + nozomi_all + '円';
@@ -130,7 +130,7 @@ function output_exp(array) {
 
     var add_green = normal_fee + (reserve_fee - 530) + green;
 
-    let trip_route = d_station +' ~ '+ a_station +'間の料金詳細';
+    let trip_route = d_station +' ~ '+ a_station +'間の料金一覧';
     let non_reserve = '普通車自由席料金: ' + normal - 530 + '円';
     let reserve = '普通車指定席料金: ' + normal + '円';
     let green_reserve = 'グリーン料金(ひかり・こだま利用): ' + add_green + '円';
@@ -192,7 +192,7 @@ function output_normal(array) {
 
     var add_green = normal_fee + (reserve_fee - 530) + green;
 
-    let trip_route = d_station +' ~ '+ a_station +'間の料金詳細';
+    let trip_route = d_station +' ~ '+ a_station +'間の料金一覧';
     let reserve = '普通車指定席料金: ' + normal + '円';
     let non_reserve = '普通車自由席料金: ' + (normal - 530) + '円';
     let green_reserve = 'グリーン料金: ' + add_green + '円';

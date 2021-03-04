@@ -13,7 +13,8 @@ function getObject() {
     var key_a = arrival_obj.options[idx_a].value;
 
     var text_d = departure_obj.options[idx_d].text;
-    var text_a = departure_obj.options[idx_a].text;
+    var text_a = arrival_obj.options[idx_a].text;
+    console.log(text_a)
 
     return [d_value, a_value, key_d, key_a, text_d, text_a, round_trip]
 }
@@ -50,14 +51,19 @@ function ButtonClick()
     var output = ['error_d','error_a', 'key_d', 'key_a']
 
     var obj =  getObject();
+    console.log(obj)
     var decide = [];
     for (var i = 0; i < 2; i++) {
+        var text = ''
         var check = booleans(obj[i]);
         if (check) {
             var text = obj[i+4].replace(/--/g, ''); //--乗車駅選択-- から'--'を置き換え　
             var text = text.substring(0,3) + 'を' + text.substring(3,5);
             document.getElementById(output[i]).innerHTML = text + 'してください'
-        } else {
+        } else if (obj[0] == obj[1]) {
+            document.getElementById(output[i]).innerHTML = '同一駅が選択されています'
+        }
+         else {
             document.getElementById(output[i]).innerHTML = ''
             add_query += ('&' + output[i+2] + '=' + obj[i]);
             decide.push('true') //リストにtrueを追加

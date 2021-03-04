@@ -736,7 +736,7 @@ function nozomi_stops() {
 
 function business_kilo(depart, arrive) {
     var far = {
-        tokyo:0.9,
+        tokyo:0.0,
         shinagawa:6.8,
         shinyokohama:28.8,
         odawara:83.9,

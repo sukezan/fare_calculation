@@ -45,6 +45,10 @@
                 background-color: #d1e0f0;
             }
             
+            #detail {
+                text-align: center;
+            }
+            
         </style>
         
     </head>
@@ -69,6 +73,19 @@
         <p>
             <button type="button" id="return" onclick="Return()">トップに戻る</button>
         </p>
+
+        <details id="details_box">
+            <summary>運賃詳細</summary>
+            <p>
+                <ul id="detail">
+                    東海道と山陽新幹線区間の運賃、特急料金またはグリーン料金を全て加算した合計金額を表示します<br>
+                    表示される運賃は全て通常期の運賃を表示しています　閑散期は200円引き、繁忙期は200円増しです<br>
+                    学生割引は片道101km以上の場合のみ適用されます<br>
+                    検索画面ではさらに往復割引運賃を計算することができます<br>
+                    往復割引は片道601km以上の場合のみ適用され、学生割引と併用することが可能です<br>
+                </ul>
+            </p>
+        </details>
         
 
         <script src="./data.js"></script>

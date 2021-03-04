@@ -23,14 +23,16 @@
                 text-align: center;
             }
             #toc {
-                padding: 0.25em 0.5em;/*上下 左右の余白*/
-                color: #494949;/*文字色*/
-                background: transparent;/*背景透明に*/
+                padding: 0.25em 0.5em;
+                color: #494949;
+                background: transparent;
                 border-left: solid 5px #7db4e6;/*左線*/
                 text-align: left;
             }
             #depart {
                 color: rgb(35, 129, 172);
+                
+                
             }
             #arrive {
                 color: rgb(35, 129, 172);
@@ -117,6 +119,17 @@
                 font-weight: 500;
                 background-color: #d1e0f0;
             }
+            summary {
+                position: relative;
+                padding: 10px 10px 10px 30px; 
+                text-align: left;
+            }
+            #important {
+                text-align: left;
+                color: red;
+                bottom: 50px;
+            }
+            
         </style>
     </head>
     <body>
@@ -222,15 +235,19 @@
         
         <div>
             <input type="checkbox" id="round-trip" name="round-trip">
-            <label for="round-trip">往復割引運賃適用</label>
+            <label for="round-trip">往復割引運賃適用</label><br>
             
-            <!--
-            <input type="checkbox" id="students-discount" name="students-discount">
-            <label for="students-discount">学生割引適用</label> -->
+             
         </div>
+        
 
         <p>
             <button type="button" id="result" onclick="ButtonClick()">運賃検索</button>
+        </p><br><br><br>
+
+        <p id="important">
+            ※注意事項<br>
+            運賃や各種料金は変更される場合があります 最新の情報は各旅客鉄道会社のホームページを参照してください
         </p>
 
         
